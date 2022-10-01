@@ -3,9 +3,13 @@ import './Cart.css'
 
 const Cart = ({ cart }) => {
     return (
-        <div>
+        <div className='cart'>
             <h2> Order Summary</h2>
             <p>Selected Items: {cart.length}</p>
+            <p>Total Price: </p>
+            <p>Total Shipping: </p>
+            <p>Tax: </p>
+            <h4>Grand Total: </h4>
         </div>
     );
 };
