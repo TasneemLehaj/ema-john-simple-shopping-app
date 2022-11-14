@@ -1,23 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import Cart from '../Cart/Cart';
 import Product from '../Product/Product';
-import { addToDb, getStoredCart } from '../../utilities/fakedb';
+import { addToDb, deleteShoppingCart, getStoredCart } from '../../utilities/fakedb';
 import './Shop.css';
+import { Link, useLoaderData } from 'react-router-dom';
 
 const Shop = () => {
-    const [products, setProducts] = useState([]);
+
+    const products = useLoaderData();
 
     const [cart, setCart] = useState([]);
 
-    useEffect(() => {
-        console.log('products load before fetch');
-        fetch('products.json')
-            .then(res => res.json())
-            .then(data => setProducts(data));
-    }, [])
+    const clearCart = () => {
+        setCart([]);
+        deleteShoppingCart();
+    }
+
 
     useEffect(() => {
-        console.log('Local storage first line')
+        // console.log('Local storage first line')
         const storedCart = getStoredCart();
         // console.log(storedCart);
         const savedCart = [];
@@ -66,7 +67,11 @@ const Shop = () => {
                 }
             </div>
             <div className='cart-container'>
-                <Cart cart={cart}></Cart>
+                <Cart clearCart={clearCart} cart={cart}>
+                    <Link to='/orders'>
+                        <button> Review Order </button>
+                    </Link>
+                </Cart>
             </div>
         </div>
     );
